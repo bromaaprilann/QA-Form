@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quality Assurance Evaluation Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+  :root{
+    --ink:#1a2b45;
+    --sub:#5b6b85;
+    --line:rgba(30,60,110,0.14);
+    --line-soft:rgba(30,60,110,0.10);
+    --blue:#2f5fd1;
+    --blue-dark:#1e3f8f;
+    --green:#1f9d55;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Lexend',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    padding:48px 20px;
+    min-height:100vh;
+    background:linear-gradient(160deg,#eef2f9 0%,#e4ecf7 45%,#dbe6f5 100%);
+    background-attachment:fixed;
+  }
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+  }
+  .panel{
+    background:rgba(255,255,255,0.72);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border:1px solid rgba(255,255,255,0.9);
+    border-radius:20px;
+    padding:32px 34px;
+    box-shadow:0 10px 30px rgba(30,60,110,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+    display:flex;
+    flex-direction:column;
+  }
+  .panel.right{position:sticky; top:32px;}
+  h1{
+    font-size:21px;
+    font-weight:600;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .desc{
+    color:var(--sub);
+    font-size:13px;
+    margin:0 0 22px;
+    font-weight:300;
+  }
+  .field{margin-bottom:18px;}
+  label{
+    display:block;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  input[type=text], input[type=date], input[type=time], textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:13.5px;
+    font-family:'Lexend',sans-serif;
+    font-weight:400;
+    color:var(--ink);
+    background:rgba(255,255,255,0.9);
+  }
+  input::placeholder, textarea::placeholder{color:var(--sub); opacity:0.75;}
+  input:focus, textarea:focus{
+    outline:none;
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(47,95,209,0.15);
+    background:#ffffff;
+  }
+  textarea{resize:vertical; min-height:80px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .sublabel{font-size:10.5px; color:var(--sub); margin-top:3px; font-weight:300;}
+  .req{color:#e0503c;}
+  .input-icon{position:relative;}
+  .input-icon input{padding-left:36px;}
+  .input-icon i{
+    position:absolute;
+    left:11px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--sub);
+    font-size:15px;
+    pointer-events:none;
+  }
+  input[type=time]::-webkit-calendar-picker-indicator,
+  input[type=date]::-webkit-calendar-picker-indicator{
+    opacity:0;
+    position:absolute;
+    right:0;
+    width:100%;
+    height:100%;
+    cursor:pointer;
+  }
+  input[type=time], input[type=date]{position:relative;}
+  .radio-group{display:flex; flex-direction:column; gap:9px;}
+  .radio-opt{display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--ink); font-weight:400;}
+  .radio-opt input{width:auto; accent-color:var(--blue);}
+  .stars{display:flex; gap:6px; font-size:28px; cursor:pointer; user-select:none;}
+  .star{color:#c8d3e6; transition:color .1s;}
+  .star.on{color:#f0a92e;}
+  .submit-btn{
+    width:100%;
+    background:var(--green);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:13px;
+    font-size:14px;
+    font-weight:500;
+    font-family:'Lexend',sans-serif;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .submit-btn:hover{filter:brightness(0.95);}
+
+  .summary-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:4px;
+  }
+  .badge{
+    font-size:10.5px;
+    background:rgba(47,95,209,0.12);
+    color:var(--blue-dark);
+    padding:4px 10px;
+    border-radius:20px;
+    font-weight:500;
+  }
+  #summaryBox{
+    width:100%;
+    flex:1;
+    min-height:440px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:12.5px;
+    line-height:1.65;
+    color:var(--ink);
+    background:rgba(255,255,255,0.9);
+    white-space:pre-wrap;
+  }
+  .btn-row{display:flex; gap:10px; margin-top:16px;}
+  .btn{
+    flex:1;
+    border-radius:10px;
+    padding:11px;
+    font-size:13.5px;
+    font-weight:500;
+    font-family:'Lexend',sans-serif;
+    cursor:pointer;
+    border:1px solid var(--line);
+    background:#ffffff;
+    color:var(--ink);
+  }
+  .btn.primary{background:var(--blue); border-color:var(--blue); color:#fff;}
+  .btn:hover{filter:brightness(0.97);}
+  .toast{
+    text-align:center;
+    font-size:12px;
+    color:var(--green);
+    height:16px;
+    margin-top:8px;
+    font-weight:500;
+  }
+  .empty-note{
+    color:var(--sub);
+    font-size:12.5px;
+    text-align:center;
+    padding:40px 10px;
+    font-weight:300;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="panel">
+    <h1>Quality Assurance Evaluation Form</h1>
+    <p class="desc">Fill out this form to monitor and evaluate quality assurance processes.</p>
+
+    <form id="qaForm">
+      <div class="field">
+        <label for="date">Date of Monitoring</label>
+        <input type="date" id="date">
+      </div>
+
+      <div class="field">
+        <div class="row2">
+          <label>Date of Call <span class="req">*</span></label>
+          <label>Time of Call <span class="req">*</span></label>
+        </div>
+        <div class="row2">
+          <div class="input-icon">
+            <input type="date" id="callDate" placeholder="MM-DD-YYYY">
+            <i class="ti ti-calendar"></i>
+          </div>
+          <div class="input-icon">
+            <input type="time" id="callTime">
+            <i class="ti ti-clock"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="techName">Technician Name</label>
+        <input type="text" id="techName" placeholder="Full name">
+      </div>
+
+      <div class="field">
+        <label for="clientName">Client Name</label>
+        <input type="text" id="clientName" placeholder="Full name">
+      </div>
+
+      <div class="field">
+        <label for="podioLink">Podio Link</label>
+        <input type="text" id="podioLink" placeholder="https://podio.com/...">
+      </div>
+
+      <div class="field">
+        <label for="salesPanelLink">Sales Panel Link</label>
+        <input type="text" id="salesPanelLink" placeholder="https://...">
+      </div>
+
+      <div class="field">
+        <label for="processDesc">Process Description</label>
+        <textarea id="processDesc" placeholder="Briefly describe the process being evaluated"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Compliance with Standards</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="compliance" value="Fully compliant"> Fully compliant</label>
+          <label class="radio-opt"><input type="radio" name="compliance" value="Partially compliant"> Partially compliant</label>
+          <label class="radio-opt"><input type="radio" name="compliance" value="Non-compliant"> Non-compliant</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Effectiveness Rating</label>
+        <div class="stars" id="stars">
+          <span class="star" data-v="1">&#9733;</span>
+          <span class="star" data-v="2">&#9733;</span>
+          <span class="star" data-v="3">&#9733;</span>
+          <span class="star" data-v="4">&#9733;</span>
+          <span class="star" data-v="5">&#9733;</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="issues">Issues Identified</label>
+        <textarea id="issues" placeholder="List any issues found during monitoring"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="actions">Corrective Actions Taken</label>
+        <textarea id="actions" placeholder="Describe corrective actions taken or planned"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="comments">Additional Comments</label>
+        <textarea id="comments" placeholder="Any other notes"></textarea>
+      </div>
+
+      <button type="button" class="submit-btn" id="copyImgBtn">Copy Image</button>
+      <div class="btn-row">
+        <button type="button" class="btn" id="downloadBtn">Download Image</button>
+      </div>
+      <div class="toast" id="toast"></div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+let rating = 0;
+const starEls = document.querySelectorAll('.star');
+starEls.forEach(s => {
+  s.addEventListener('click', () => {
+    rating = parseInt(s.dataset.v);
+    starEls.forEach(el => el.classList.toggle('on', parseInt(el.dataset.v) <= rating));
+  });
+});
+
+function buildFieldValues(){
+  return {
+    date: document.getElementById('date').value || 'Not specified',
+    callDate: document.getElementById('callDate').value || 'Not specified',
+    callTime: document.getElementById('callTime').value || 'Not specified',
+    tech: document.getElementById('techName').value || 'Not specified',
+    client: document.getElementById('clientName').value || 'Not specified',
+    podio: document.getElementById('podioLink').value || 'Not specified',
+    salesPanel: document.getElementById('salesPanelLink').value || 'Not specified',
+    desc: document.getElementById('processDesc').value || 'Not specified',
+    compliance: (document.querySelector('input[name=compliance]:checked') || {}).value || 'Not specified',
+    stars: rating > 0 ? (rating + ' / 5') : 'Not rated',
+    issues: document.getElementById('issues').value || 'None noted',
+    actions: document.getElementById('actions').value || 'None noted',
+    comments: document.getElementById('comments').value || 'None'
+  };
+}
+
+function buildSummary(){
+  const v = buildFieldValues();
+  return "QUALITY ASSURANCE EVALUATION SUMMARY\n"
+    + "----------------------------------------\n"
+    + "Date of monitoring: " + v.date + "\n"
+    + "Date of call: " + v.callDate + "\n"
+    + "Time of call: " + v.callTime + "\n"
+    + "Technician name: " + v.tech + "\n"
+    + "Client name: " + v.client + "\n"
+    + "Podio link: " + v.podio + "\n"
+    + "Sales panel link: " + v.salesPanel + "\n\n"
+    + "Process description:\n" + v.desc + "\n\n"
+    + "Compliance with standards: " + v.compliance + "\n"
+    + "Effectiveness rating: " + v.stars + "\n\n"
+    + "Issues identified:\n" + v.issues + "\n\n"
+    + "Corrective actions taken:\n" + v.actions + "\n\n"
+    + "Additional comments:\n" + v.comments;
+}
+
+function wrapText(ctx, text, maxWidth){
+  const words = String(text).split(/\s+/);
+  const lines = [];
+  let current = '';
+  words.forEach(word => {
+    const test = current ? current + ' ' + word : word;
+    if(ctx.measureText(test).width > maxWidth && current){
+      lines.push(current);
+      current = word;
+    } else {
+      current = test;
+    }
+  });
+  if(current) lines.push(current);
+  return lines;
+}
+
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+let fontsReady = null;
+function preloadFonts(){
+  if(!fontsReady){
+    fontsReady = Promise.all([
+      document.fonts.load('600 11px Lexend'),
+      document.fonts.load('400 13px Lexend'),
+      document.fonts.load('600 15px Lexend')
+    ]);
+  }
+  return fontsReady;
+}
+document.addEventListener('DOMContentLoaded', preloadFonts);
+
+async function buildSummaryImage(){
+  const v = buildFieldValues();
+  const scale = 2;
+  const width = 560;
+  const padX = 20;
+  const boxPadX = 12;
+  const boxPadY = 9;
+  const labelGap = 4;
+  const fieldGap = 14;
+  const lineHeight = 18;
+
+  await preloadFonts();
+
+  const measureCanvas = document.createElement('canvas');
+  const mctx = measureCanvas.getContext('2d');
+  mctx.font = '400 13px Lexend, Arial, sans-serif';
+  const maxTextWidth = width - padX * 2 - boxPadX * 2;
+
+  const fields = [
+    ['Date of monitoring', v.date],
+    ['Date of call', v.callDate],
+    ['Time of call', v.callTime],
+    ['Technician name', v.tech],
+    ['Client name', v.client],
+    ['Podio link', v.podio],
+    ['Sales panel link', v.salesPanel],
+    ['Process description', v.desc],
+    ['Compliance with standards', v.compliance],
+    ['Effectiveness rating', v.stars],
+    ['Issues identified', v.issues],
+    ['Corrective actions taken', v.actions],
+    ['Additional comments', v.comments]
+  ].map(([label, value]) => {
+    const lines = wrapText(mctx, value, maxTextWidth);
+    const boxHeight = boxPadY * 2 + lines.length * lineHeight;
+    return { label, lines, boxHeight };
+  });
+
+  const titleHeight = 32;
+  let contentHeight = titleHeight;
+  fields.forEach(f => {
+    contentHeight += 11 + labelGap + f.boxHeight + fieldGap;
+  });
+  const height = contentHeight + 20;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width * scale;
+  canvas.height = height * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+
+  ctx.fillStyle = '#fafbfc';
+  roundRect(ctx, 0, 0, width, height, 10);
+  ctx.fill();
+  ctx.strokeStyle = '#dfe4e9';
+  ctx.lineWidth = 1;
+  roundRect(ctx, 0.5, 0.5, width - 1, height - 1, 10);
+  ctx.stroke();
+
+  let y = 20;
+  ctx.fillStyle = '#1a2b45';
+  ctx.font = '600 15px Lexend, Arial, sans-serif';
+  ctx.textBaseline = 'top';
+  ctx.fillText('Quality assurance evaluation summary', padX, y);
+  y += titleHeight;
+
+  fields.forEach(f => {
+    ctx.fillStyle = '#5b6b85';
+    ctx.font = '600 11px Lexend, Arial, sans-serif';
+    ctx.fillText(f.label.toUpperCase(), padX, y);
+    y += 11 + labelGap;
+
+    ctx.fillStyle = '#ffffff';
+    roundRect(ctx, padX, y, width - padX * 2, f.boxHeight, 8);
+    ctx.fill();
+    ctx.strokeStyle = '#dfe4e9';
+    ctx.lineWidth = 1;
+    roundRect(ctx, padX + 0.5, y + 0.5, width - padX * 2 - 1, f.boxHeight - 1, 8);
+    ctx.stroke();
+
+    ctx.fillStyle = '#1a2b45';
+    ctx.font = '400 13px Lexend, Arial, sans-serif';
+    let ly = y + boxPadY;
+    f.lines.forEach(line => {
+      ctx.fillText(line, padX + boxPadX, ly);
+      ly += lineHeight;
+    });
+
+    y += f.boxHeight + fieldGap;
+  });
+
+  return new Promise(resolve => canvas.toBlob(blob => resolve(blob), 'image/png'));
+}
+
+function showToast(msg, duration){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  setTimeout(() => toast.textContent = '', duration || 2500);
+}
+
+function downloadBlob(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+document.getElementById('copyImgBtn').addEventListener('click', async () => {
+  let blob;
+  try{
+    blob = await buildSummaryImage();
+  } catch(err){
+    console.error('Image generation failed:', err);
+    showToast('Could not generate the image: ' + err.message, 4000);
+    return;
+  }
+
+  try{
+    if(!window.ClipboardItem){
+      throw new Error('ClipboardItem not supported in this browser');
+    }
+    const item = new ClipboardItem({ 'image/png': blob });
+    await navigator.clipboard.write([item]);
+    showToast('Image copied — paste it into the email body.');
+  } catch(err){
+    console.error('Clipboard write failed, downloading instead:', err);
+    downloadBlob(blob, 'qa-evaluation-summary.png');
+    showToast('Clipboard is blocked here — image downloaded instead. Attach it to the email.', 4500);
+  }
+});
+
+document.getElementById('downloadBtn').addEventListener('click', async () => {
+  try{
+    const blob = await buildSummaryImage();
+    downloadBlob(blob, 'qa-evaluation-summary.png');
+    showToast('Image downloaded.');
+  } catch(err){
+    console.error('Download failed:', err);
+    showToast('Could not generate the image: ' + err.message, 4000);
+  }
+});
+</script>
+
+</body>
+</html>
