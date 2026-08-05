@@ -25,7 +25,7 @@
     color:var(--ink);
     padding:48px 20px;
     min-height:100vh;
-    background:linear-gradient(160deg,#eef2f9 0%,#e4ecf7 45%,#dbe6f5 100%);
+    background:linear-gradient(100deg,#ffffff 0%,#f5f8fc 35%,#e9f0fa 70%,#dfe9f7 100%);
     background-attachment:fixed;
   }
   .wrap{
@@ -49,6 +49,20 @@
     font-weight:600;
     margin:0 0 4px;
     color:var(--ink);
+  }
+  .pill-header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    background:linear-gradient(135deg,#6f7bf0,#5763e6);
+    color:#ffffff;
+    font-size:15px;
+    font-weight:600;
+    padding:11px 20px;
+    border-radius:999px;
+    margin:0 0 22px;
+    box-shadow:0 4px 12px rgba(87,99,230,0.3);
   }
   .desc{
     color:var(--sub);
@@ -193,8 +207,9 @@
 <div class="wrap">
 
   <div class="panel">
-    <h1>Quality Assurance Evaluation Form</h1>
-    <p class="desc">Fill out this form to monitor and evaluate quality assurance processes.</p>
+    <div class="pill-header">
+      <span>Quality Assurance Evaluation Form</span>
+    </div>
 
     <form id="qaForm">
       <div class="field">
@@ -227,16 +242,6 @@
       <div class="field">
         <label for="clientName">Client Name</label>
         <input type="text" id="clientName" placeholder="Full name">
-      </div>
-
-      <div class="field">
-        <label for="podioLink">Podio Link</label>
-        <input type="text" id="podioLink" placeholder="https://podio.com/...">
-      </div>
-
-      <div class="field">
-        <label for="salesPanelLink">Sales Panel Link</label>
-        <input type="text" id="salesPanelLink" placeholder="https://...">
       </div>
 
       <div class="field">
@@ -280,9 +285,6 @@
       </div>
 
       <button type="button" class="submit-btn" id="copyImgBtn">Copy Image</button>
-      <div class="btn-row">
-        <button type="button" class="btn" id="downloadBtn">Download Image</button>
-      </div>
       <div class="toast" id="toast"></div>
     </form>
   </div>
@@ -306,8 +308,6 @@ function buildFieldValues(){
     callTime: document.getElementById('callTime').value || 'Not specified',
     tech: document.getElementById('techName').value || 'Not specified',
     client: document.getElementById('clientName').value || 'Not specified',
-    podio: document.getElementById('podioLink').value || 'Not specified',
-    salesPanel: document.getElementById('salesPanelLink').value || 'Not specified',
     desc: document.getElementById('processDesc').value || 'Not specified',
     compliance: (document.querySelector('input[name=compliance]:checked') || {}).value || 'Not specified',
     stars: rating > 0 ? (rating + ' / 5') : 'Not rated',
@@ -325,9 +325,7 @@ function buildSummary(){
     + "Date of call: " + v.callDate + "\n"
     + "Time of call: " + v.callTime + "\n"
     + "Technician name: " + v.tech + "\n"
-    + "Client name: " + v.client + "\n"
-    + "Podio link: " + v.podio + "\n"
-    + "Sales panel link: " + v.salesPanel + "\n\n"
+    + "Client name: " + v.client + "\n\n"
     + "Process description:\n" + v.desc + "\n\n"
     + "Compliance with standards: " + v.compliance + "\n"
     + "Effectiveness rating: " + v.stars + "\n\n"
@@ -400,8 +398,6 @@ async function buildSummaryImage(){
     ['Time of call', v.callTime],
     ['Technician name', v.tech],
     ['Client name', v.client],
-    ['Podio link', v.podio],
-    ['Sales panel link', v.salesPanel],
     ['Process description', v.desc],
     ['Compliance with standards', v.compliance],
     ['Effectiveness rating', v.stars],
@@ -508,17 +504,6 @@ document.getElementById('copyImgBtn').addEventListener('click', async () => {
     console.error('Clipboard write failed, downloading instead:', err);
     downloadBlob(blob, 'qa-evaluation-summary.png');
     showToast('Clipboard is blocked here — image downloaded instead. Attach it to the email.', 4500);
-  }
-});
-
-document.getElementById('downloadBtn').addEventListener('click', async () => {
-  try{
-    const blob = await buildSummaryImage();
-    downloadBlob(blob, 'qa-evaluation-summary.png');
-    showToast('Image downloaded.');
-  } catch(err){
-    console.error('Download failed:', err);
-    showToast('Could not generate the image: ' + err.message, 4000);
   }
 });
 </script>
