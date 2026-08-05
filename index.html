@@ -347,14 +347,14 @@ document.addEventListener('DOMContentLoaded', preloadFonts);
 
 async function buildSummaryImage(){
   const v = buildFieldValues();
-  const scale = 2;
-  const width = 560;
-  const padX = 20;
-  const boxPadX = 12;
-  const boxPadY = 9;
+  const scale = 1;
+  const width = 460;
+  const padX = 18;
+  const boxPadX = 11;
+  const boxPadY = 8;
   const labelGap = 4;
-  const fieldGap = 14;
-  const lineHeight = 18;
+  const fieldGap = 13;
+  const lineHeight = 17;
 
   await preloadFonts();
 
@@ -379,8 +379,7 @@ async function buildSummaryImage(){
     return { label, lines, boxHeight };
   });
 
-  const titleHeight = 32;
-  let contentHeight = titleHeight;
+  let contentHeight = 0;
   fields.forEach(f => {
     contentHeight += 11 + labelGap + f.boxHeight + fieldGap;
   });
@@ -401,11 +400,7 @@ async function buildSummaryImage(){
   ctx.stroke();
 
   let y = 20;
-  ctx.fillStyle = '#1a2b45';
-  ctx.font = '600 15px Lexend, Arial, sans-serif';
   ctx.textBaseline = 'top';
-  ctx.fillText('Quality assurance evaluation summary', padX, y);
-  y += titleHeight;
 
   fields.forEach(f => {
     ctx.fillStyle = '#5b6b85';
