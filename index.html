@@ -245,27 +245,11 @@
       </div>
 
       <div class="field">
-        <label for="processDesc">Process Description</label>
-        <textarea id="processDesc" placeholder="Briefly describe the process being evaluated"></textarea>
-      </div>
-
-      <div class="field">
         <label>Compliance with Standards</label>
         <div class="radio-group">
           <label class="radio-opt"><input type="radio" name="compliance" value="Fully compliant"> Fully compliant</label>
           <label class="radio-opt"><input type="radio" name="compliance" value="Partially compliant"> Partially compliant</label>
           <label class="radio-opt"><input type="radio" name="compliance" value="Non-compliant"> Non-compliant</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Effectiveness Rating</label>
-        <div class="stars" id="stars">
-          <span class="star" data-v="1">&#9733;</span>
-          <span class="star" data-v="2">&#9733;</span>
-          <span class="star" data-v="3">&#9733;</span>
-          <span class="star" data-v="4">&#9733;</span>
-          <span class="star" data-v="5">&#9733;</span>
         </div>
       </div>
 
@@ -292,15 +276,6 @@
 </div>
 
 <script>
-let rating = 0;
-const starEls = document.querySelectorAll('.star');
-starEls.forEach(s => {
-  s.addEventListener('click', () => {
-    rating = parseInt(s.dataset.v);
-    starEls.forEach(el => el.classList.toggle('on', parseInt(el.dataset.v) <= rating));
-  });
-});
-
 function buildFieldValues(){
   return {
     date: document.getElementById('date').value || 'Not specified',
@@ -308,9 +283,7 @@ function buildFieldValues(){
     callTime: document.getElementById('callTime').value || 'Not specified',
     tech: document.getElementById('techName').value || 'Not specified',
     client: document.getElementById('clientName').value || 'Not specified',
-    desc: document.getElementById('processDesc').value || 'Not specified',
     compliance: (document.querySelector('input[name=compliance]:checked') || {}).value || 'Not specified',
-    stars: rating > 0 ? (rating + ' / 5') : 'Not rated',
     issues: document.getElementById('issues').value || 'None noted',
     actions: document.getElementById('actions').value || 'None noted',
     comments: document.getElementById('comments').value || 'None'
@@ -326,9 +299,7 @@ function buildSummary(){
     + "Time of call: " + v.callTime + "\n"
     + "Technician name: " + v.tech + "\n"
     + "Client name: " + v.client + "\n\n"
-    + "Process description:\n" + v.desc + "\n\n"
-    + "Compliance with standards: " + v.compliance + "\n"
-    + "Effectiveness rating: " + v.stars + "\n\n"
+    + "Compliance with standards: " + v.compliance + "\n\n"
     + "Issues identified:\n" + v.issues + "\n\n"
     + "Corrective actions taken:\n" + v.actions + "\n\n"
     + "Additional comments:\n" + v.comments;
@@ -398,9 +369,7 @@ async function buildSummaryImage(){
     ['Time of call', v.callTime],
     ['Technician name', v.tech],
     ['Client name', v.client],
-    ['Process description', v.desc],
     ['Compliance with standards', v.compliance],
-    ['Effectiveness rating', v.stars],
     ['Issues identified', v.issues],
     ['Corrective actions taken', v.actions],
     ['Additional comments', v.comments]
